@@ -160,8 +160,33 @@ async def greekgodx(ctx):
 @client.command ()
 async def god(ctx):
     await ctx.send("https://github.com/torvalds/linux")
-
-
+#-------------------------------Rules--------------------------------------------------------
+@client.command()
+async def r(ctx,arg):
+    if arg == "1":
+        await ctx.send("**1. No spam!**")
+    if arg == "2":
+        await ctx.send("**2. No griefing!**")
+    if arg == "3":
+        await ctx.send("**3. No insults!**")
+    if arg == "4":
+        await ctx.send("**4. No successive voice switching!**")
+    if arg == "5":
+        await ctx.send("**5. No voice distortion or soundboard!**")
+    if arg == "6":
+        await ctx.send("**6. No CAPS!**")
+    if arg == "7":
+        await ctx.send("**7. No Zalgo!**")
+    if arg == "8":
+        await ctx.send("**8. No hassle!**")
+    if arg == "9":
+        await ctx.send("**9. Don't bother anyone!**")
+    if arg == "10":
+        await ctx.send("**10. Don't slander anyone**")
+    if arg == "11":
+        await ctx.send("**11. Don't press anyone**")
+    if arg == "12":
+        await ctx.send("**12. Follow the guidelines! https://discordapp.com/guidelines **")
 
 #---------------------Errors---------------------------------------------------
 @client.event
