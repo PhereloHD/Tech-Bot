@@ -8,8 +8,6 @@ from discord.ext.commands import has_permissions
 from time import sleep
 client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
-upvote = '<:upvote:726140828090761217>'
-downvote = '<:downvote:726140881060757505>'
 reddit = praw.Reddit(client_id='mq3IHq-iSdxquw',
                      client_secret='MASkagROt68WoC-_pi-bm7SZmbY',
                      user_agent='Tech-Bot')
