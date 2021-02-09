@@ -8,25 +8,18 @@ from discord.ext.commands import has_permissions
 from time import sleep
 client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
-upvote = "<:upvote:726140828090761217>"
+upvote = '<:upvote:726140828090761217>'
 downvote = '<:downvote:726140881060757505>'
-reddit = praw.Reddit(client_id='ID',
-                     client_secret='Secret',
+reddit = praw.Reddit(client_id='mq3IHq-iSdxquw',
+                     client_secret='MASkagROt68WoC-_pi-bm7SZmbY',
                      user_agent='Tech-Bot')
-#------------------------Start---------------------------------------------------
+#------------------------Start--------------------------------------------------
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Game(f".help (on {len(client.guilds)} servers)"))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Laughing at Windows users...'))
     print('Bot online, lets hope you wont cry.')
-#-------------------------Reddit stuff--------------------------------------------
-@client.command()
-async def pokimane(ctx):
-    memes_submissions = reddit.subreddit('pokimanehot').top()
-    post_to_pick = random.randint(1, 100)
-    for i in range(0, post_to_pick):
-        submission = next(x for x in memes_submissions if not x.stickied)
-    await ctx.send(submission.url)
-
+    
+#-------------------------Reddit stuff------------------------------------------
 @client.command()
 async def linuxmeme(ctx):
     memes_submissions = reddit.subreddit('linuxmemes').top()
@@ -36,17 +29,9 @@ async def linuxmeme(ctx):
     await ctx.send(submission.url)
 
 @client.command()
-async def muta(ctx):
-    memes_submissions = reddit.subreddit('SomeOrdinaryGmrs').top()
-    post_to_pick = random.randint(1, 100)
-    for i in range(0, post_to_pick):
-        submission = next(x for x in memes_submissions if not x.stickied)
-    await ctx.send(submission.url)
-
-@client.command()
 async def meme(ctx):
     memes_submissions = reddit.subreddit('memes').top()
-    post_to_pick = random.randint(1, 100)
+    post_to_pick = random.randint(1, 50)
     for i in range(0, post_to_pick):
         submission = next(x for x in memes_submissions if not x.stickied)
     await ctx.send(submission.url)
@@ -56,14 +41,15 @@ async def meme(ctx):
 @has_permissions(administrator=True)
 async def rm(ctx, amount : int):
     await ctx.channel.purge(limit=amount+1)
-    sent = await ctx.send(F"I deleted `{amount}` messages")
+    sent = await ctx.send(F'I deleted `{amount}` messages')
     sleep(1)
     await sent.delete()
 @client.command()
 @has_permissions(administrator=True)
-async def sudo(ctx,*,arg):
+async def doas(ctx,*,arg):
     if arg == "rm -rf /*":
         amount = 100
+        await ctx.channel.purge('***See you in the Bunker!***')
         await ctx.channel.purge(limit=amount)
 
 @client.command()
@@ -82,103 +68,88 @@ async def mute(ctx,member : discord.Member, *, reason = None):
     await ctx.guild.create_role(name='muted', permissions=discord.Permissions(0))
     role = discord.utils.get(ctx.guild.roles, name="muted")
     await member.add_roles(role)
-    await ctx.send(f'https://tenor.com/view/turn-down-volume-mute-volume-gif-14268149 {member.mention} Muted!')
+    await ctx.send(f'g3t muted m8 {member.mention}')
 
 @client.command()
 @has_permissions(administrator=True)
 async def unban(ctx, *, member):
-
     banned_users = await ctx.guild.bans()
-
     for ban_entry in banned_users:
-
         user = ban_entry.user
-
         await ctx.guild.unban(user)
-
         await ctx.send(f'{user.mention} Unbanned!.')
 
 #-------------------------Features-----------------------------------------------------------------
 
 @client.command()
 async def ping(ctx):
-    await ctx.send(f':ping_pong: Pong **{round(client.latency * 1000)}ms**')
+    await ctx.send(f'This does not mean anything really. **{round(client.latency * 1000)}ms**')
+
 @client.command()
-async def echo(ctx, *, arg):
-    await ctx.send(arg)
+async def echo(ctx, *, message: str):
+        await ctx.send(message)
 
 @client.command()
 async def compgen(ctx,*,arg):
-    if arg == "-c":
-        await ctx.send("https://fossbytes.com/a-z-list-linux-command-line-reference/")
-@client.command()
-async def github(ctx):
-    await ctx.send("This bot is not forked anymore: https://github.com/Abb1x/Ububot Here: https://github.com/PhereloHD/Tech-Bot ")
+    if arg == '-c':
+        await ctx.send('https://fossbytes.com/a-z-list-linux-command-line-reference/')
 
-#------------------Features that are getting Tested/Secrets-----------------------------------------------------------
+
+#------------------Features-----------------------------------------------------------
 
 @client.command()
 async def nam(ctx):
-     await ctx.send("Error")
+     await ctx.send('Error')
 
 @client.command ()
 async def test(ctx):
-    await ctx.send("Testing in Progress!")
+    await ctx.send('nice you didn\'t do something bad')
 
 @client.command ()
 async def picard(ctx):
-    await ctx.send("Make it so!")
+    await ctx.send('Make it so!')
 
 @client.command ()
 async def spock(ctx):
-    await ctx.send("Live Long and Prosper!")
-
-@client.command ()
-async def story(ctx):
-    a = ["You killed yourself. F", "You don't know what to do, so you decided to Program a Discord-Bot", "You went out to watch Pokimane's livestream."]
-    await ctx.send(random.choice(a))
+    await ctx.send('Live Long and Prosper!')
 
 @client.command ()
 async def quotes(ctx):
     q = ["**Talk is cheap. Show me the code.** -Linus Torvalds", "**When you don't create things, you become defined by your tastes rather than ability. your tastes only narrow & exclude people. so create.** - Why The Lucky Stiff", "**Programs must be written for people to read, and only incidentally for machines to execute.** - Harold Abelson, Structure and Interpretation of Computer Programs"]
     await ctx.send(random.choice(q))
 
-@client.command ()
-async def site(ctx):
-    await ctx.send("https://www.tuxbot.tech/")
-
 
 @client.command ()
 async def fuckyou(ctx):
-    await ctx.send("no u m8")
-
-
-@client.command ()
-async def greekgodx(ctx):
-    await ctx.send("fatass")
+    await ctx.send('no u m8')
 
 @client.command ()
 async def god(ctx):
     await ctx.send("https://github.com/torvalds/linux")
+
+@client.command ()
+async def ara(ctx):
+    await ctx.send('YOU SUMMONED AKENO!!!')
+    await ctx.send("https://www.anime-planet.com/images/characters/akeno-himejima-34165.jpg?t=1545970466")
 #-------------------------------Rules--------------------------------------------------------
 @client.command()
 async def r(ctx,arg):
     if arg == "1":
-        await ctx.send("**1. No spam!**")
+        await ctx.send('**1. No spam!**')
     if arg == "2":
-        await ctx.send("**2. No griefing!**")
+        await ctx.send('**2. No griefing!**')
     if arg == "3":
-        await ctx.send("**3. No insults!**")
+        await ctx.send('**3. No insults!**')
     if arg == "4":
-        await ctx.send("**4. No successive voice switching!**")
+        await ctx.send('**4. No successive voice switching!**')
     if arg == "5":
-        await ctx.send("**5. No voice distortion or soundboard!**")
+        await ctx.send('**5. No voice distortion or soundboard!**')
     if arg == "6":
-        await ctx.send("**6. No CAPS!**")
+        await ctx.send('**6. No CAPS!**')
     if arg == "7":
-        await ctx.send("**7. No Zalgo!**")
+        await ctx.send('**7. No Zalgo!**')
     if arg == "8":
-        await ctx.send("**8. No hassle!**")
+        await ctx.send('**8. No hassle!**')
     if arg == "9":
         await ctx.send("**9. Don't bother anyone!**")
     if arg == "10":
@@ -186,98 +157,68 @@ async def r(ctx,arg):
     if arg == "11":
         await ctx.send("**11. Don't press anyone**")
     if arg == "12":
-        await ctx.send("**12. Follow the guidelines! https://discordapp.com/guidelines **")
+        await ctx.send('**12. Follow the guidelines! https://discordapp.com/guidelines **')
+    if arg == "13":
+        await ctx.send('**13. Worship Abbix**')
+    else:
+        await ctx.send('This rule does not exist')
 
 #---------------------Errors---------------------------------------------------
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        embed = discord.Embed(description=":x: │ **This command does not exist**",colour=discord.Colour.red())
+        embed = discord.Embed(description="***Nice try*** │ **This command does not exist**",colour=discord.Colour.blue())
         await ctx.send(embed=embed)
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(description=f":x: │ **{ctx.message.author.mention} is not in the sudoers file.This incident will be reported.**",colour=discord.Colour.red())
+        embed = discord.Embed(description=f"***Report incoming*** │ **{ctx.message.author.mention} Is not an Admin**",colour=discord.Colour.red())
         await ctx.send(embed=embed)
     if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(description=f":x: │ **Missing required arguments**",colour=discord.Colour.red())
+        embed = discord.Embed(description=f"**F** │ **Missing required arguments**",colour=discord.Colour.green())
         await ctx.send(embed=embed)
 
 
-#------------------------------------------Docs----------------------------------------------------------------------
 
-@client.command()
-async def docs(ctx,*,arg):
-    if arg == "Ubuntu":
-        await ctx.send("Here are the officials docs for Ubuntu : https://docs.ubuntu.com/")
-    if arg == "Popos":
-        await ctx.send("Here are the officials docs for PopOS : https://pop.system76.com/docs/")
-    if arg == "Debian":
-        await ctx.send("Here are the officials docs for Debian : https://www.debian.org/doc/")
-    if arg == "Elementaryos":
-        await ctx.send("Here are the officials docs for ElementaryOS : https://elementary.io/docs")
-    if arg == "Kubuntu":
-        await ctx.send("Here are the officials docs for Kubuntu : https://wiki.kubuntu.org/Kubuntu/KubuntuDocs")
-    if arg == "Lubuntu":
-        await ctx.send("Here are the officials docs for lubuntu : https://docs.lubuntu.net/")
-    if arg == "Xubuntu":
-        await ctx.send("Here are the officials docs for Xubuntu: https://docs.xubuntu.org")
-    if arg == "Arch":
-        await ctx.send("Here are the officials docs for Arch: https://wiki.archlinux.org/")
-    if arg == "Manjaro":
-        await ctx.send("Here are the official docs for Manjaro: https://manjaro.org/ ")
-
-
-@docs.error
-async def docs_error(ctx,error) :
-    if isinstance(error, commands.MissingRequiredArgument):
-            author = ctx.message.author
-            embed = discord.Embed(
-            colour = discord.Colour.orange()
-            )
-            embed.set_author(name='Available distro docs:')
-            embed.add_field(name='Ubuntu',value = "ubuntu",inline=False)
-            embed.add_field(name='Debian',value = "debian", inline=False)
-            embed.add_field(name='PopOS',value = "popos",inline=False)
-            embed.add_field(name='ElementaryOS',value = "elementaryos",inline=False)
-            embed.add_field(name='Kubuntu',value = "kubuntu",inline=False)
-            embed.add_field(name='lubuntu',value = "lubuntu",inline=False)
-            embed.add_field(name='Xubuntu',value = "xubuntu",inline=False)
-            embed.add_field(name='Arch',value = "Arch",inline=False)
-            embed.add_field(name='Manjaro',value = "Manjaro",inline=False)
-            await ctx.send(embed=embed)
 #----------------------------Help---------------------------------------------------------------------------------------
 @client.command()
-async def help(ctx):
-    author = ctx.message.author
-    await author.create_dm()
-    embed = discord.Embed(
-    colour = discord.Colour.green()
-    )
-    embed.set_author(name='List of commands')
-    embed.add_field(name='ban', value='Bans a member', inline=False)
-    embed.add_field(name='unban', value='Unbans a member', inline=False)
-    embed.add_field(name='kick', value='Kicks a member', inline=False)
-    embed.add_field(name='mute', value='Mutes a member', inline=False)
-    embed.add_field(name='rm <amount>', value='Purge a number of messages', inline=False)
-    embed.add_field(name='echo', value='Copies your message', inline=False)
-    embed.add_field(name='sudo rm -rf /*', value='Deletes 100 messages', inline=False)
-    embed.add_field(name='ping', value='Returns pong!', inline=False)
-    embed.add_field(name='compgen -c', value='Gives you a list of linux commands', inline=False)
-    embed.add_field(name='docs <distro>', value='Send you a link of officials docs of chosen distro (no value = list of distros)', inline=False)
-    embed.add_field(name='linuxmeme', value='gives you a random linux meme', inline=False)
-    embed.add_field(name='muta', value='Random SomeOrdinaryGamer memes.', inline=False)
-    embed.add_field(name='pokimane', value='You do not wanna know that.', inline=False)
-    embed.add_field(name='meme', value='Gives you a random meme.', inline=False)
-    embed.add_field(name='story', value='Gives you a story.', inline=False)
-    embed.add_field(name='picard', value='MAKE IT SO!', inline=False)
-    embed.add_field(name='spock', value='Live Long and Prosper!', inline=False)
-    embed.add_field(name='quote', value='Gives you a random Programing quote', inline=False)
-    embed.add_field(name='god', value='Gives you the Github Profile of Linus Torvalds', inline=False)
-    embed.add_field(name='nam', value='Error', inline=False)
-    embed.add_field(name='Extras!', value='There are some secret features with the commands so test and try to find them out!', inline=False)
-    await ctx.send(embed=embed)
+async def help(ctx,*,arg):
+    if arg == 'linux':
+        author = ctx.message.author
+        embed = discord.Embed(
+            colour = discord.Colour.green()
+        )
+        embed.set_author(name='List of Linux and Management commands')
+        embed.add_field(name='ban', value='Bans a member', inline=False)
+        embed.add_field(name='unban', value='Unbans a member', inline=False)
+        embed.add_field(name='kick', value='Kicks a member', inline=False)
+        embed.add_field(name='mute', value='Mutes a member', inline=False)
+        embed.add_field(name='rm <amount>', value='Purge a number of messages', inline=False)
+        embed.add_field(name='echo', value='is currently broken', inline=False)
+        embed.add_field(name='doas rm -rf /*', value='Deletes 100 messages', inline=False)
+        embed.add_field(name='compgen -c', value='Gives you a list of linux commands', inline=False)
+        embed.add_field(name='linuxmeme', value='gives you a random linux meme', inline=False)
+        await ctx.send(embed=embed)
+
+    if arg == "misc":
+        author = ctx.message.author
+        embed = discord.Embed(
+            colour = discord.Colour.green()
+         )
+        embed=discord.Embed(title='Misc', description='Misc commands ', inline=False)
+        embed.set_author(name='List of misc commands')
+        embed.add_field(name='quotes', value='Gives you legendary Quotes', inline=False)
+        embed.add_field(name='god', value="Gives you the Linux Kernel source code", inline=False)
+        embed.add_field(name='nam', value="Error", inline=False)
+        embed.add_field(name='picard', value="Gives you Motivation", inline=False)
+        embed.add_field(name='ping', value="This doesn't mean anything really", inline=False)
+        embed.add_field(name='ara', value="It's Punga's Fault", inline=False)
+        embed.add_field(name='r ', value="r + Rule number to get the listed Rules", inline=False)
+        embed.add_field(name='spock', value='Gives you Motivation', inline=False)
+        embed.add_field(name='meme', value='Gives you a random meme. Fresh from Reddit', inline=False)
+        await ctx.send(embed=embed)
+        
     
 #---------------------------------------------END-----------------------------------------------------
 
 
 
-client.run('Token')
+client.run('token')
