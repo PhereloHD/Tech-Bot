@@ -51,15 +51,7 @@ async def rm(ctx, amount : int):
     sent = await ctx.send(f'I deleted `{amount}` messages')
     sleep(1)
     await sent.delete()
-@client.command ()
-@has_permissions(administrator=True)
-async def doas(ctx,*,arg):
-    if arg == "rm -rf /*":
-        amount = 100
-        await ctx.channel.purge('***See you in the Bunker!***')
-        await ctx.channel.purge(limit=amount)
-
-
+    
 #-------------------------Features-----------------------------------------------------------------
 
 @client.command ()
@@ -177,40 +169,44 @@ async def on_command_error(ctx, error):
 
 
 #----------------------------Help---------------------------------------------------------------------------------------
-@client.command()
-async def help(ctx,*,arg):    
-    if arg == 'linux':
-        author = ctx.message.author
-        embed = discord.Embed(
-            colour = discord.Colour.green()
-        )
-        embed.set_author(name='List of Linux and Management commands')
-        embed.add_field(name='rm <amount>', value='Purge a number of messages', inline=False)
-        embed.add_field(name='echo', value='Speaks after you', inline=False)
-        embed.add_field(name='doas rm -rf /*', value='Deletes 100 messages', inline=False)
-        embed.add_field(name='compgen -c', value='Gives you a list of linux commands', inline=False)
-        embed.add_field(name='linuxmeme', value='gives you a random linux meme', inline=False)
-        await ctx.send(embed=embed)
+@client.command ()
+async def help(ctx):    
+    await ctx.send(f"**To get more information, type `helplinux` or `helpmisc`**")
 
-    if arg == "misc":
-        author = ctx.message.author
-        embed = discord.Embed(
-            colour = discord.Colour.green()
-         )
-        embed=discord.Embed(title='Misc', description='Misc commands ', inline=False)
-        embed.set_author(name='List of misc commands')
-        embed.add_field(name='quotes', value='Gives you legendary Quotes', inline=False)
-        embed.add_field(name='god', value="Gives you the Linux Kernel source code", inline=False)
-        embed.add_field(name='nam', value="Error", inline=False)
-        embed.add_field(name='picard', value="Gives you Motivation", inline=False)
-        embed.add_field(name='ping', value="This doesn't mean anything really", inline=False)
-        embed.add_field(name='ara', value="It's Punga's Fault", inline=False)
-        embed.add_field(name='r ', value="r + Rule number to get the listed Rules", inline=False)
-        embed.add_field(name='spock', value='Gives you Motivation', inline=False)
-        embed.add_field(name='simp', value='Gives you your simprate', inline=False)
-        embed.add_field(name='whoAmI', value='What do you expect?', inline=False)
-        embed.add_field(name='meme', value='Gives you a random meme. Fresh from Reddit', inline=False)
-        await ctx.send(embed=embed)
+@client.command ()
+async def helplinux(ctx):
+    author = ctx.message.author
+    embed = discord.Embed(
+        colour = discord.Colour.green()
+    )
+    embed.set_author(name='List of Linux and Management commands')
+    embed.add_field(name='god', value="Gives you the Linux Kernel source code", inline=False)
+    embed.add_field(name='rm <amount>', value='Purge a number of messages', inline=False)
+    embed.add_field(name='echo', value='Speaks after you', inline=False)
+    embed.add_field(name='compgen -c', value='Gives you a list of linux commands', inline=False)
+    embed.add_field(name='linuxmeme', value='gives you a random linux meme', inline=False)
+    await ctx.send(embed=embed)
+
+
+@client.command ()
+async def helpmisc(ctx):
+    author = ctx.message.author
+    embed = discord.Embed(
+        colour = discord.Colour.blue()
+    )
+    embed.set_author(name='List of misc commands')
+    embed.add_field(name='quotes', value='Gives you legendary Quotes', inline=False)
+
+    embed.add_field(name='nam', value="Error", inline=False)
+    embed.add_field(name='picard', value="Gives you Motivation", inline=False)
+    embed.add_field(name='ping', value="This doesn't mean anything really", inline=False)
+    embed.add_field(name='ara', value="It's Punga's Fault", inline=False)
+    embed.add_field(name='r ', value="r + Rule number to get the listed Rules", inline=False)
+    embed.add_field(name='spock', value='Gives you Motivation', inline=False)
+    embed.add_field(name='simp', value='Gives you your simprate', inline=False)
+    embed.add_field(name='whoAmI', value='What do you expect?', inline=False)
+    embed.add_field(name='meme', value='Gives you a random meme. Fresh from Reddit', inline=False)
+    await ctx.send(embed=embed)
         
     
 #---------------------------------------------END-----------------------------------------------------
