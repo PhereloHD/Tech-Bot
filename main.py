@@ -68,6 +68,10 @@ async def compgen(ctx,*,arg):
 
 
 #------------------Features-----------------------------------------------------------
+@client.command ()
+async def github(ctx):
+    await ctx.send("https://github.com/PhereloHD/Tech-Bot/")
+
 
 @client.command ()
 async def nam(ctx):
