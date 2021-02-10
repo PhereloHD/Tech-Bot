@@ -18,7 +18,7 @@ async def on_ready():
     print('Bot online, lets hope you wont cry.')
     
 #-------------------------Reddit stuff------------------------------------------
-@client.command()
+@client.command ()
 async def linuxmeme(ctx):
     memes_submissions = reddit.subreddit('linuxmemes').top()
     post_to_pick = random.randint(1, 100)
@@ -26,7 +26,7 @@ async def linuxmeme(ctx):
         submission = next(x for x in memes_submissions if not x.stickied)
     await ctx.send(submission.url)
 
-@client.command()
+@client.command ()
 async def meme(ctx):
     memes_submissions = reddit.subreddit('memes').top()
     post_to_pick = random.randint(1, 50)
@@ -35,14 +35,14 @@ async def meme(ctx):
     await ctx.send(submission.url)
 
 #------------------------------Moderation------------------------------------------
-@client.command()
+@client.command ()
 @has_permissions(administrator=True)
 async def rm(ctx, amount : int):
     await ctx.channel.purge(limit=amount+1)
     sent = await ctx.send(F'I deleted `{amount}` messages')
     sleep(1)
     await sent.delete()
-@client.command()
+@client.command ()
 @has_permissions(administrator=True)
 async def doas(ctx,*,arg):
     if arg == "rm -rf /*":
@@ -50,44 +50,18 @@ async def doas(ctx,*,arg):
         await ctx.channel.purge('***See you in the Bunker!***')
         await ctx.channel.purge(limit=amount)
 
-@client.command()
-@has_permissions(administrator=True)
-async def kick(ctx,member : discord.Member, *, reason = None):
-    await member.kick(reason=reason)
-    await ctx.send(f'{member.mention} kicked !')
-@client.command()
-@has_permissions(administrator=True)
-async def ban(ctx,member : discord.Member, *, reason = None):
-    await member.ban(reason=reason)
-    await ctx.send(f'https://tenor.com/view/blob-banned-ban-hammer-blob-ban-emoji-gif-16021044 {member.mention} Banned!')
-@client.command()
-@has_permissions(administrator=True)
-async def mute(ctx,member : discord.Member, *, reason = None):
-    await ctx.guild.create_role(name='muted', permissions=discord.Permissions(0))
-    role = discord.utils.get(ctx.guild.roles, name="muted")
-    await member.add_roles(role)
-    await ctx.send(f'g3t muted m8 {member.mention}')
-
-@client.command()
-@has_permissions(administrator=True)
-async def unban(ctx, *, member):
-    banned_users = await ctx.guild.bans()
-    for ban_entry in banned_users:
-        user = ban_entry.user
-        await ctx.guild.unban(user)
-        await ctx.send(f'{user.mention} Unbanned!.')
 
 #-------------------------Features-----------------------------------------------------------------
 
-@client.command()
+@client.command ()
 async def ping(ctx):
     await ctx.send(f'This does not mean anything really. **{round(client.latency * 1000)}ms**')
 
-@client.command()
+@client.command ()
 async def echo(ctx, *, message: str):
         await ctx.send(message)
-
-@client.command()
+        
+@client.command ()
 async def compgen(ctx,*,arg):
     if arg == '-c':
         await ctx.send('https://fossbytes.com/a-z-list-linux-command-line-reference/')
@@ -95,7 +69,7 @@ async def compgen(ctx,*,arg):
 
 #------------------Features-----------------------------------------------------------
 
-@client.command()
+@client.command ()
 async def nam(ctx):
      await ctx.send('Error')
 
@@ -129,9 +103,20 @@ async def god(ctx):
 async def ara(ctx):
     await ctx.send('YOU SUMMONED AKENO!!!')
     await ctx.send("https://www.anime-planet.com/images/characters/akeno-himejima-34165.jpg?t=1545970466")
+
+@client.command ()
+async def simp(ctx):
+    simprate = random.randint(0,100)
+    await ctx.send(f"{ctx.message.author.mention} **Your simprate: " + str(simprate) + " %**")
+
+
+@client.command ()
+async def whoAmI(ctx):
+   await ctx.send(f'You are {ctx.message.author.mention}')
+
 #-------------------------------Rules--------------------------------------------------------
-@client.command()
-async def r(ctx,arg):
+@client.command ()
+async def r(ctx, arg):
     if arg == "1":
         await ctx.send('**1. No spam!**')
     if arg == "2":
@@ -158,9 +143,8 @@ async def r(ctx,arg):
         await ctx.send('**12. Follow the guidelines! https://discordapp.com/guidelines **')
     if arg == "13":
         await ctx.send('**13. Worship Abbix**')
-    else:
-        await ctx.send('This rule does not exist')
-
+    if arg == "34":
+        await ctx.send('**You sick fuck**')
 #---------------------Errors---------------------------------------------------
 @client.event
 async def on_command_error(ctx, error):
@@ -178,19 +162,15 @@ async def on_command_error(ctx, error):
 
 #----------------------------Help---------------------------------------------------------------------------------------
 @client.command()
-async def help(ctx,*,arg):
+async def help(ctx,*,arg):    
     if arg == 'linux':
         author = ctx.message.author
         embed = discord.Embed(
             colour = discord.Colour.green()
         )
         embed.set_author(name='List of Linux and Management commands')
-        embed.add_field(name='ban', value='Bans a member', inline=False)
-        embed.add_field(name='unban', value='Unbans a member', inline=False)
-        embed.add_field(name='kick', value='Kicks a member', inline=False)
-        embed.add_field(name='mute', value='Mutes a member', inline=False)
         embed.add_field(name='rm <amount>', value='Purge a number of messages', inline=False)
-        embed.add_field(name='echo', value='is currently broken', inline=False)
+        embed.add_field(name='echo', value='Speaks after you', inline=False)
         embed.add_field(name='doas rm -rf /*', value='Deletes 100 messages', inline=False)
         embed.add_field(name='compgen -c', value='Gives you a list of linux commands', inline=False)
         embed.add_field(name='linuxmeme', value='gives you a random linux meme', inline=False)
@@ -211,6 +191,8 @@ async def help(ctx,*,arg):
         embed.add_field(name='ara', value="It's Punga's Fault", inline=False)
         embed.add_field(name='r ', value="r + Rule number to get the listed Rules", inline=False)
         embed.add_field(name='spock', value='Gives you Motivation', inline=False)
+        embed.add_field(name='simp', value='Gives you your simprate', inline=False)
+        embed.add_field(name='whoAmI', value='What do you expect?', inline=False)
         embed.add_field(name='meme', value='Gives you a random meme. Fresh from Reddit', inline=False)
         await ctx.send(embed=embed)
         
