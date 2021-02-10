@@ -26,6 +26,15 @@ async def linuxmeme(ctx):
         submission = next(x for x in memes_submissions if not x.stickied)
     await ctx.send(submission.url)
 
+
+@client.command ()
+async def historymeme(ctx):
+    memes_submissions = reddit.subreddit('historymemes').top()
+    post_to_pick = random.randint(1, 100)
+    for i in range(0, post_to_pick):
+        submission = next(x for x in memes_submissions if not x.stickied)
+    await ctx.send(submission.url)
+
 @client.command ()
 async def meme(ctx):
     memes_submissions = reddit.subreddit('memes').top()
@@ -39,7 +48,7 @@ async def meme(ctx):
 @has_permissions(administrator=True)
 async def rm(ctx, amount : int):
     await ctx.channel.purge(limit=amount+1)
-    sent = await ctx.send(F'I deleted `{amount}` messages')
+    sent = await ctx.send(f'I deleted `{amount}` messages')
     sleep(1)
     await sent.delete()
 @client.command ()
@@ -59,7 +68,10 @@ async def ping(ctx):
 
 @client.command ()
 async def echo(ctx, *, message: str):
+    if not ("@" in message):
         await ctx.send(message)
+    else:
+        await ctx.send("**Sorry, but you can't @ with echo.**")
         
 @client.command ()
 async def compgen(ctx,*,arg):
