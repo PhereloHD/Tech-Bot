@@ -26,7 +26,6 @@ async def linuxmeme(ctx):
         submission = next(x for x in memes_submissions if not x.stickied)
     await ctx.send(submission.url)
 
-
 @client.command ()
 async def historymeme(ctx):
     memes_submissions = reddit.subreddit('historymemes').top()
@@ -38,7 +37,7 @@ async def historymeme(ctx):
 @client.command ()
 async def meme(ctx):
     memes_submissions = reddit.subreddit('memes').top()
-    post_to_pick = random.randint(1, 50)
+    post_to_pick = random.randint(1, 100)
     for i in range(0, post_to_pick):
         submission = next(x for x in memes_submissions if not x.stickied)
     await ctx.send(submission.url)
@@ -70,8 +69,6 @@ async def compgen(ctx,*,arg):
     if arg == '-c':
         await ctx.send('https://fossbytes.com/a-z-list-linux-command-line-reference/')
 
-
-#------------------Features-----------------------------------------------------------
 @client.command ()
 async def github(ctx):
     await ctx.send("https://github.com/PhereloHD/Tech-Bot/")
@@ -97,7 +94,6 @@ async def spock(ctx):
 async def quotes(ctx):
     q = ["**Talk is cheap. Show me the code.** -Linus Torvalds", "**When you don't create things, you become defined by your tastes rather than ability. your tastes only narrow & exclude people. so create.** - Why The Lucky Stiff", "**Programs must be written for people to read, and only incidentally for machines to execute.** - Harold Abelson, Structure and Interpretation of Computer Programs"]
     await ctx.send(random.choice(q))
-
 
 @client.command ()
 async def fuckyou(ctx):
@@ -165,8 +161,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(description=f"**F** │ **Missing required arguments**",colour=discord.Colour.green())
         await ctx.send(embed=embed)
-
-
 
 #----------------------------Help---------------------------------------------------------------------------------------
 @client.command ()
