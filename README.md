@@ -1,3 +1,3 @@
 # Tech-Bot
-**A discord Bot made for Fun**
+**A Discord Bot made for Fun**
 
